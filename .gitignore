@@ -1,0 +1,19 @@
+# PyCharm
+.idea/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual envs
+venv/
+env/
+.venv/
+
+# MacOS junk
+.DS_Store
+
+# VSCode (optional)
+.vscode/
