@@ -1,5 +1,5 @@
 from connect4 import *
-from ai import ai_random_move
+from ai import ai_random_move, ai_minimax_move
 
 def player_turn(board, turn):
     piece = "X" if turn == 0 else "O"
@@ -18,7 +18,8 @@ def player_turn(board, turn):
 
 
 def ai_turn(board, ai_piece="O"):
-    col = ai_random_move(board)            
+    #col = ai_random_move(board)      random AI
+    col = ai_minimax_move(board, depth=3, ai_piece=ai_piece)  # HARDER      
     print(f"AI chooses column {col}")
     return col
 
