@@ -105,10 +105,50 @@ def ai_greedy_move(board, ai_piece="O"):
 
     return best_col
 
+def minimax(board, depth, maximizingPlayer, ai_piece):
+    opp_piece = "O" if ai_piece == "X" else "X"
+    valid = get_valid_locations(board)
 
+    # Terminal checks
+    if winning_move(board, ai_piece):
+        return (None, 10_000_000)
+    if winning_move(board, opp_piece):
+        return (None, -10_000_000)
+    if depth == 0 or len(valid) == 0:
+        return (None, score_position(board, ai_piece))
 
-# 3. MINIMAX (NO ALPHA-BETA)
-def minimax(board, depth, alpha, beta, maximizingPlayer, ai_piece):
+    if maximizingPlayer:
+        value = -999999
+        best_col = random.choice(valid)
+
+        for col in valid:
+            row = get_next_open_row(board, col)
+            temp = drop_temp(board, row, col, ai_piece)
+            _, new_score = minimax(temp, depth - 1, False, ai_piece)
+
+            if new_score > value:
+                value = new_score
+                best_col = col
+
+        return best_col, value
+
+    else:
+        value = 999999
+        best_col = random.choice(valid)
+
+        for col in valid:
+            row = get_next_open_row(board, col)
+            temp = drop_temp(board, row, col, opp_piece)
+            _, new_score = minimax(temp, depth - 1, True, ai_piece)
+
+            if new_score < value:
+                value = new_score
+                best_col = col
+
+        return best_col, value
+
+# 4. MINIMAX with alpha-beta
+def minimax_alpha_beta(board, depth, alpha, beta, maximizingPlayer, ai_piece):
     opp_piece = "O" if ai_piece == "X" else "X"
     valid = get_valid_locations(board)
 
