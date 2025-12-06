@@ -1,5 +1,5 @@
 from connect4 import *
-from ai import ai_random_move, ai_minimax_move
+from ai import ai_random_move, ai_greedy_move, ai_minimax_move
 
 def player_turn(board, turn):
     piece = "X" if turn == 0 else "O"
@@ -17,46 +17,46 @@ def player_turn(board, turn):
     return col
 
 
-def ai_turn(board, ai_piece="O"):
-    #col = ai_random_move(board)                             #random AI
-    #col = ai_greedy_move(board, ai_piece="O")               #Greedy Hurestic 
-    col = ai_minimax_move(board, ai_piece="O", depth=3)      #MinMax     
+def ai_turn(board, ai_piece, mode):
+    if mode == "1":
+        col = ai_random_move(board)
+    elif mode == "2":
+        col = ai_greedy_move(board, ai_piece)
+    else:
+        col = ai_minimax_move(board, ai_piece, depth=4)
+
     print(f"AI chooses column {col}")
     return col
 
 
-def run_game(vs_ai=False):
+def run_game(vs_ai=False, ai_mode="3"):
     board = create_board()
     game_over = False
-    turn = 0  # 0 = Player 1 (X), 1 = Player 2 or AI (O)
+    turn = 0
 
     print("\nWelcome to Connect 4!")
     print_board(board)
 
     while not game_over:
-        if turn == 0:  
-            # Human player's turn
+        if turn == 0:
             col = player_turn(board, turn)
             if col is None:
                 continue
             piece = "X"
         else:
-            # Either AI or Player 2
             if vs_ai:
-                col = ai_turn(board, ai_piece="O")
+                col = ai_turn(board, "O", ai_mode)
             else:
                 col = player_turn(board, turn)
                 if col is None:
                     continue
             piece = "O"
 
-        # Place the piece
         row = get_next_open_row(board, col)
         drop_piece(board, row, col, piece)
 
         print_board(board)
 
-        # Check for win
         if winning_move(board, piece):
             if turn == 1 and vs_ai:
                 print("AI wins!")
@@ -65,13 +65,11 @@ def run_game(vs_ai=False):
             game_over = True
             break
 
-        # Check for draw
         if all(board[0][c] != " " for c in range(COLUMN_COUNT)):
             print("It's a draw!")
             game_over = True
             break
 
-        # Switch turns
         turn = (turn + 1) % 2
 
 
@@ -81,7 +79,14 @@ def main():
     choice = input("Choose a mode (1/2): ")
 
     if choice == "2":
-        run_game(vs_ai=True)
+        print("\nChoose AI difficulty:")
+        print("1. Random")
+        print("2. Greedy Heuristic")
+        print("3. Minimax (Hardest)")
+        ai_mode = input("Select (1/2/3): ")
+        if ai_mode not in ("1", "2", "3"):
+            ai_mode = "3"
+        run_game(vs_ai=True, ai_mode=ai_mode)
     else:
         run_game(vs_ai=False)
 

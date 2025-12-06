@@ -7,8 +7,6 @@ from connect4 import (
     winning_move
 )
 
-
-
 # UTILITIES
 def get_valid_locations(board):
     return [c for c in range(COLUMN_COUNT) if is_valid_location(board, c)]
@@ -110,7 +108,7 @@ def ai_greedy_move(board, ai_piece="O"):
 
 
 # 3. MINIMAX (NO ALPHA-BETA)
-def minimax(board, depth, maximizingPlayer, ai_piece):
+def minimax(board, depth, alpha, beta, maximizingPlayer, ai_piece):
     opp_piece = "O" if ai_piece == "X" else "X"
     valid = get_valid_locations(board)
 
@@ -122,6 +120,8 @@ def minimax(board, depth, maximizingPlayer, ai_piece):
     if depth == 0 or len(valid) == 0:
         return (None, score_position(board, ai_piece))
 
+    valid.sort(key=lambda c: abs(c - COLUMN_COUNT // 2))
+
     if maximizingPlayer:
         value = -999999
         best_col = random.choice(valid)
@@ -129,11 +129,15 @@ def minimax(board, depth, maximizingPlayer, ai_piece):
         for col in valid:
             row = get_next_open_row(board, col)
             temp = drop_temp(board, row, col, ai_piece)
-            _, new_score = minimax(temp, depth - 1, False, ai_piece)
+            _, new_score = minimax(temp, depth - 1, alpha, beta, False, ai_piece)
 
             if new_score > value:
                 value = new_score
                 best_col = col
+
+            alpha = max(alpha, value)
+            if alpha >= beta:
+                break
 
         return best_col, value
 
@@ -144,15 +148,19 @@ def minimax(board, depth, maximizingPlayer, ai_piece):
         for col in valid:
             row = get_next_open_row(board, col)
             temp = drop_temp(board, row, col, opp_piece)
-            _, new_score = minimax(temp, depth - 1, True, ai_piece)
+            _, new_score = minimax(temp, depth - 1, alpha, beta, True, ai_piece)
 
             if new_score < value:
                 value = new_score
                 best_col = col
 
+            beta = max(beta, value)
+            if alpha >= beta:
+                break
+
         return best_col, value
 
 
 def ai_minimax_move(board, ai_piece="O", depth=3):
-    col, _ = minimax(board, depth, True, ai_piece)
+    col, _ = minimax(board, depth, -999999, 999999, True, ai_piece)
     return col
