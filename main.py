@@ -18,8 +18,9 @@ def player_turn(board, turn):
 
 
 def ai_turn(board, ai_piece="O"):
-    #col = ai_random_move(board)      random AI
-    col = ai_minimax_move(board, depth=3, ai_piece=ai_piece)  # HARDER      
+    #col = ai_random_move(board)                             #random AI
+    #col = ai_greedy_move(board, ai_piece="O")               #Greedy Hurestic 
+    col = ai_minimax_move(board, ai_piece="O", depth=3)      #MinMax     
     print(f"AI chooses column {col}")
     return col
 
