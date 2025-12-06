@@ -105,6 +105,7 @@ def ai_greedy_move(board, ai_piece="O"):
 
     return best_col
 
+# 3. MINIMAX without alpha-beta
 def minimax(board, depth, maximizingPlayer, ai_piece):
     opp_piece = "O" if ai_piece == "X" else "X"
     valid = get_valid_locations(board)
