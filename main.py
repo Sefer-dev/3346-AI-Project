@@ -1,5 +1,5 @@
 from connect4 import *
-from ai import ai_random_move, ai_greedy_move, ai_minimax_move
+from ai import ai_random_move, ai_greedy_move, ai_minimax_move, ai_minimax_ab_move
 
 def player_turn(board, turn):
     piece = "X" if turn == 0 else "O"
@@ -22,8 +22,10 @@ def ai_turn(board, ai_piece, mode):
         col = ai_random_move(board)
     elif mode == "2":
         col = ai_greedy_move(board, ai_piece)
-    else:
+    elif mode == "3":
         col = ai_minimax_move(board, ai_piece, depth=4)
+    else:
+        col = ai_minimax_ab_move(board, ai_piece, depth=5)
 
     print(f"AI chooses column {col}")
     return col
@@ -82,10 +84,11 @@ def main():
         print("\nChoose AI difficulty:")
         print("1. Random")
         print("2. Greedy Heuristic")
-        print("3. Minimax (Hardest)")
-        ai_mode = input("Select (1/2/3): ")
-        if ai_mode not in ("1", "2", "3"):
-            ai_mode = "3"
+        print("3. Minimax with no AB(Hardest)")
+        print("4. Minimax with AB(Hardest)")
+        ai_mode = input("Select (1/2/3/4): ")
+        if ai_mode not in ("1", "2", "3", "4"):
+            ai_mode = "4"
         run_game(vs_ai=True, ai_mode=ai_mode)
     else:
         run_game(vs_ai=False)
