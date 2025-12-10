@@ -85,7 +85,10 @@ python main.py
 ```
 
 ### **Github**
-- https://github.com/Sefer-dev/3346-AI-Project?tab=readme-ov-file
+https://github.com/Sefer-dev/3346-AI-Project?tab=readme-ov-file
+
+### **Meetings**
+Our meetings are in the wiki tab of github
 
 
 Project Demo:
