@@ -75,7 +75,7 @@ Results in:
 ## Running the Game
 
 ### **Requirements**
-- Python 3.10+
+- Has to be Python 3.10 or older
 - No external libraries needed
 
 ### **Run the game**
