@@ -84,6 +84,9 @@ Results in:
 python main.py
 ```
 
+### **Github**
+- https://github.com/Sefer-dev/3346-AI-Project?tab=readme-ov-file
+
 
 Project Demo:
 https://youtu.be/RSJWzZLzWbY?si=4zm9lmJQE3E8XBgv
