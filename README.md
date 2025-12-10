@@ -62,6 +62,7 @@ Results in:
 
 ## Project Structure
 ```bash
+3346-AI-Project/
 |-- main.py # Main game loop & mode selection
 |-- connect4.py # Game logic (board, moves, win detection)
 |-- ai.py # All AI implementations (Random, Greedy, Minimax, AB)
