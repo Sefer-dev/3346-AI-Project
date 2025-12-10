@@ -32,7 +32,7 @@ Created for our 3346 course project to demonstrate the impact of heuristics and 
 
 ## AI Techniques Explained
 
-### 🔹 **Heuristic Evaluation Function**
+### **Heuristic Evaluation Function**
 Scores a board based on:
 - Control of center column  
 - Number of 2-in-a-row, 3-in-a-row, 4-in-a-row  
